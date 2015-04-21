@@ -136,34 +136,6 @@ def save(f):
 
 ''' Testing '''
 
-# primitive testing with a premade graph, only read and +1 functionality
-'''
-graph1 = {
-	'A':{('mv1','w'):('B',1),
-		 ('mv2','w'):('C',2)},
-	'B':{('mv4','b'):('E',3),
-		 ('mv5','b'):('F',2)},
-	'C':{('mv6','b'):('G',1),
-		 ('mv7','b'):('H',1)},
-	'D':{},
-	'E':{},
-	'F':{},
-	'G':{},
-	'H':{}}
-
-print 'first recommended move', firstrecommend(graph1)
-print 'popularity before the first move', graph1['A'][('mv1','w')][1]
-print 'recommend after first move, should be E', recommend(graph1,'A','mv1','w','B')
-print 'popularity after the first move', graph1['A'][('mv1','w')][1]
-print 'first recommended move after change, should output two things', firstrecommend(graph1)
-print 'recommend after first move again', recommend(graph1,'A','mv1','w','B')
-print 'popularity after making the first move again', graph1['A'][('mv1','w')][1]
-print 'first recommended move after 2 first moves, should output B', firstrecommend(graph1)
-print 'here is the second move', recommend(graph1,'B','mv4','b','E')
-
-graphx = graph1
-'''
-
 # building graph from scratch, super thorough testing
 initialize('A')
 
