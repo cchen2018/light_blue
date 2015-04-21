@@ -115,9 +115,10 @@ def recommend(before, move, color, after):
 	else: print 'Error: could not find initial configuration'
 
 # clears graph
-def reset(init):
+def reset():
 	global graph
-	graph = {init:{}}
+	global startpos
+	graph = {startpos:{}}
 
 # load filename
 def load(f):
@@ -175,7 +176,7 @@ assert firstrecommend() == [('mv4', 'D')]
 save('test')
 
 # clear graph
-reset(startpos) 
+reset() 
 assert firstrecommend() == []
 
 # load graph
