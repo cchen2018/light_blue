@@ -74,15 +74,19 @@ def main():
                 When printed before move it works, 
                 when printed after move it doesn't'''
                 old_board = new_game.board
+                #deepcopy old board to maintain config.
                 old_board_copy = copy.deepcopy(old_board)
                 #print new_game.board
                 print old_board
                 new_game.move(move)
                 new_board = new_game.board
+                #new_board_copy = copy.deepcopy(new_board)
                 #print new_game.board
                 #print old_board
                 print new_board
-                elements.append(old_board_copy)
+                #elements.append((old_board_copy, move))
+                #elements.append((move, new_board_copy))
+                elements.append((old_board_copy, move, new_board))
 
                 # Getting piece colors - works
                 if new_game.board.get_turn() == 0:
@@ -113,8 +117,12 @@ def main():
                 '''
 
         print elements
-        '''for element in elements:
-                print element'''
+        for element in elements:
+                print element[0]
+                print element[1]
+                print element[2]
+                print "-----------------------------------"
+
 
         # Another attempt to get player info tags
         '''tg = get_tags(new_game,pgn_file)
