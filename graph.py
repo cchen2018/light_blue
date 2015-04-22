@@ -121,16 +121,16 @@ def reset():
 	graph = {startpos:{}}
 
 # load filename
-def load(f):
-	f = open(f,'r')
+def load(name):
+	f = open(name,'r')
 	global graph
 	graph = f.read()
 	graph = eval(graph)
 	f.close()
 
 # save filename
-def save(f):
-	f = open(f,'w') 
+def save(name):
+	f = open(name,'w') 
 	f.write(str(graph))
 	f.close()
 
