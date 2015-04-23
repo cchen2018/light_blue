@@ -1,6 +1,7 @@
 import chess as ch
 import copy
 import glob
+import graph
 
 '''
 At the moment, this code prints out one game in this format:
@@ -23,7 +24,7 @@ def main():
                 pgn_file = open(f, 'r')
                 pgn = game.import_pgn(pgn_file)
 
-                elements = []
+                #elements = []
                 piece_color = ""
                 new_game.setup()
 
@@ -47,8 +48,8 @@ def main():
                                 #print piece_color
                                 #print move
 
-                        elements.append((old_board_copy, move, piece_color, new_board_copy))
-                        all_elements.append(elements)
+                        all_elements.append((str(old_board_copy), str(move), piece_color, str(new_board_copy)))
+                        #all_elements.append(elements)
                         '''Eventually this will be the output
                         format - a list of tuples containing
                         these values'''
@@ -67,19 +68,29 @@ def main():
                                  piece_color,\
                                  new_game.board))
                 '''
-
+                '''
                 print elements
                 for element in elements:
                         print element[0]
                         print element[1]
                         print element[2]
                         print element[3]
-                        print "-----------------------------------"
+                        print "-----------------------------------"'''
                 #print elements[0][3]
                 print count
                 #print all_elements
                 pgn_file.close()
-        print all_elements
+        #print all_elements
+        graph.initialize()
+
+        for (a, b, c, d) in all_elements:
+            graph.recommend(a, b, c, d)
+
+        graph.save("Carlsen20")
+
+        print graph.graph[str(starting_game.board)]
+        print graph.firstrecommend()
+
 
 if __name__ == '__main__':
 	main()

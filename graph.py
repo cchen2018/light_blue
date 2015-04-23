@@ -1,8 +1,12 @@
+import chess as ch
+
 # make the graph with the initial config, run before using other stuff
-def initialize(init):
+def initialize():
 	global graph
 	global startpos
-	startpos = init
+	starting_game = ch.Game()
+	starting_game.setup()
+	startpos = str(starting_game.board)
 	graph = {startpos:{}}
 
 # helper function
@@ -136,9 +140,9 @@ def save(name):
 
 
 ''' Testing '''
-
+'''
 # building graph from scratch, super thorough testing
-initialize('A')
+initialize()
 
 # empty graph
 assert firstrecommend() == []
@@ -182,3 +186,4 @@ assert firstrecommend() == []
 # load graph
 load('test')
 assert firstrecommend() == [('mv4', 'D')]
+'''
