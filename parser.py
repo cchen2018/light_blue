@@ -86,10 +86,10 @@ def main():
         for (a, b, c, d) in all_elements:
             graph.recommend(a, b, c, d)
 
-        graph.save("Carlsen20")
+        graph.save("Kasparov20")
 
-        print graph.graph[str(starting_game.board)]
-        print graph.firstrecommend()
+        #print graph.graph[str(starting_game.board)]
+        #print graph.firstrecommend()
 
 
 if __name__ == '__main__':
