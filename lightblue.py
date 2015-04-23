@@ -30,7 +30,7 @@ elif lstlen == 0:
 else:
 	print "You should make one of these moves:"
 	for item in lst:
-		(x,y) = lst[item]
+		(x,y) = item
 		print "One possible move is:", x
 		print "It should give you:"
 		print y
@@ -63,7 +63,7 @@ while quit == False:
 		print after
 		print "You should make one of these moves:"
 		for item in lst2:
-			(x,y) = lst2[item]
+			(x,y) = item
 			print "One possible move is:", x
 			print "It should give you:"
 			print y
