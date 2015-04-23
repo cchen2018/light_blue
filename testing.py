@@ -1,7 +1,7 @@
 import graph
 
 graph.initialize()
-graph.load("Kasparov20")
+graph.load("Carlsen20")
 
 lst = graph.firstrecommend()
 (x,y) = lst[0]
