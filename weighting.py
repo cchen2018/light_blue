@@ -28,10 +28,10 @@ class winloss(object):
 	def alter(self, current):
 		(weight, win, loss) = current
 		# tie
-		if self.new = "t":
+		if self.new == "t":
 			return current
 		# win
-		elif self.new = "w":
+		elif self.new == "w":
 			win += 1
 			return ((win/loss),win,loss)
 		# loss
