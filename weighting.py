@@ -53,5 +53,24 @@ class winloss(object):
 			loss += 1
 			return ((win/loss),win,loss)
 
+class lightblue(object):
+	def __init__(self, elo, wlt):
+		self.elo = elo
+		self.wlt = wlt 
+
+		# tie
+		if self.wlt == "t":
+			self.default = (exp(self.elo/1000)/10,)
+		# win
+		elif self.wlt == "w":
+			self.default = (exp(self.elo/1000),)
+		# loss
+		else:
+			self.default = (-1/(exp(self.elo/1000)),)
+
+	def alter(self, current):
+		value = current[0]
+		return (value + self.default,)
+		
 
 

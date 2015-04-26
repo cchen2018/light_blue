@@ -80,6 +80,8 @@ def main():
                 weight_obj = weighting.elo(elo)
             elif weight_type == "wl":
                 weight_obj = weighting.winloss(wlt)
+            elif weight_type == "lightblue":
+                weight_obj = weighting.lightblue(elo, wlt)
             else: 
                 raise "Usage: python parser.py weight_type"
 
@@ -105,6 +107,8 @@ def main():
         graph.save("Carlsen20elo")
     elif weight_type == "wl":
         graph.save("Carlsen20wl")
+    elif weight_type == "lightblue":
+        graph.save("Carlsen20lb")
     else: 
         raise "Usage: python parser.py weight_type"
     
