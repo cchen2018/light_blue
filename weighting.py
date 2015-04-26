@@ -1,8 +1,7 @@
-# getting ready to implement elo and win/loss
-
 from __future__ import division
 import math
 
+# more popular moves are recommended
 class popularity(object):
 
 	# iterates popularity by one
@@ -11,6 +10,7 @@ class popularity(object):
 		return (pop + 1,)
 	default = (1,)
 
+# moves made by player with highest elo recommended
 class elo(object):
 	def __init__(self, new):
 		if new == 0:
@@ -25,6 +25,7 @@ class elo(object):
 			return (self.new,)
 		else: return current
 
+# moves with highest win/loss ratio recommended
 class winloss(object):
 	def __init__(self, new):
 		self.new = new 
@@ -54,6 +55,7 @@ class winloss(object):
 			loss += 1
 			return ((win/loss),win,loss)
 
+# proprietary lightblue algorithm for weighting
 class lightblue(object):
 	def __init__(self, elo, wlt):
 		if elo == 0:
