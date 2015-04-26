@@ -14,85 +14,61 @@ New Board Configuration
 
         
 # main funtion for returning tuple format to graph
-def main():
-        all_elements = []
-        count = 0
-        for f in glob.iglob('*.pgn'):
-                count += 1
-                game = ch.Game()
-                new_game = ch.Game()
-                print f
-                pgn_file = open(f, 'r')
-                pgn = game.import_pgn(pgn_file)
+def main(weight_type):
+    all_elements = []
+    count = 0
+    for f in glob.iglob('*.pgn'):
+        count += 1
+        game = ch.Game()
+        new_game = ch.Game()
+        print f
+        pgn_file = open(f, 'r')
+        pgn = game.import_pgn(pgn_file)
 
-                #elements = []
-                piece_color = ""
-                new_game.setup()
+        #elements = []
+        piece_color = ""
+        new_game.setup()
 
-                for move in game.moves:
+        for move in game.moves:
 
-                        old_board = new_game.board
-                        #deepcopy old board to maintain config.
-                        old_board_copy = copy.deepcopy(old_board)
-                        
-                        new_game.move(move)
-                        
-                        new_board = new_game.board
-                        new_board_copy = copy.deepcopy(new_board)
+            old_board = new_game.board
+            #deepcopy old board to maintain config.
+            old_board_copy = copy.deepcopy(old_board)
+            
+            new_game.move(move)
+            
+            new_board = new_game.board
+            new_board_copy = copy.deepcopy(new_board)
 
-                        # Getting piece colors - works
-                        if new_game.board.get_turn() == 0:
-                                piece_color = "b"
-                                #print piece_color
-                        else:
-                                piece_color = "w"
-                                #print piece_color
-                                #print move
+            # Getting piece colors - works
+            if new_game.board.get_turn() == 0:
+                    piece_color = "b"
+                    #print piece_color
+            else:
+                    piece_color = "w"
+                    #print piece_color
+                    #print move
 
-                        all_elements.append((str(old_board_copy), str(move), piece_color, str(new_board_copy)))
-                        #all_elements.append(elements)
-                        '''Eventually this will be the output
-                        format - a list of tuples containing
-                        these values'''
+            all_elements.append((str(old_board_copy), str(move), piece_color, str(new_board_copy)))
+            #all_elements.append(elements)
 
-                        ''' 
-                        elements.append((old_board,\
-                        move,\
-                                 Win/Loss,\
-                                 Elo,\
-                                 Piece Color,\
-                                 new_game.board))
-                elements.append((,\
-                                 move,\
-                                 ,\
-                                 ,\
-                                 piece_color,\
-                                 new_game.board))
-                '''
-                '''
-                print elements
-                for element in elements:
-                        print element[0]
-                        print element[1]
-                        print element[2]
-                        print element[3]
-                        print "-----------------------------------"'''
-                #print elements[0][3]
-                print count
-                #print all_elements
-                pgn_file.close()
+        #print elements[0][3]
+        print count
         #print all_elements
-        graph.initialize()
+        pgn_file.close()
+    #print all_elements
+    graph.initialize()
 
-        weightobj = weighting.popularity()
+    
+    weight_obj = weighting.popularity()
 
-        for (a, b, c, d) in all_elements:
-            graph.recommend(weightobj, a, b, c, d)
+    for (a, b, c, d) in all_elements:
+        graph.recommend(weight_obj, a, b, c, d)
 
-        graph.save("CarlsenNew20")
+    graph.save("CarlsenNew20")
 
-        #print graph.graph[str(starting_game.board)]
-        #print graph.firstrecommend()
+    #print graph.graph[str(starting_game.board)]
+    #print graph.firstrecommend()
 
 
 if __name__ == '__main__':
