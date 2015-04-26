@@ -12,8 +12,8 @@ with open('small_pgn.pgn', 'r+') as f:
   reg3 = re.search('Result (.*)', data)
   final_string3 = reg3.group(1)
   
-  WhiteElo = int(final_string1[1:-2])
-  BlackElo = int(final_string2[1:-2])
+  WhiteElo = int(final_string1[1:-3])
+  BlackElo = int(final_string2[1:-3])
 
   print "%d \n%d" %(WhiteElo, BlackElo) 
   
