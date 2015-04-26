@@ -192,7 +192,8 @@ assert firstrecommend() == [('mv4', 'D')]
 
 class popularity(object):
 	def alter(self, current):
-		return (current + 1,)
+		pop = current[0]
+		return (pop + 1,)
 	default = (1,)
 '''
 class elo(object):
@@ -223,7 +224,7 @@ def recommend(weight, before, move, color, after):
 			if edge[0] == after:
 
 				# grabs current weight
-				current = edge[1][0]
+				current = edge[1]
 
 				# alters weight
 				graph[before][(move, color)] = (edge[0], weight.alter(current))
