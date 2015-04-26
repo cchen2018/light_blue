@@ -54,6 +54,16 @@ while quit == False:
 
 	popobject = weighting.popularity()
 
+	def check_mate(): 
+		side = current_game.board.get_turn()
+		return ch.Board.is_mate(current_game.board, side)
+
+	check_message = "You're in check!"
+
+	def check():
+		side = current_game.board.get_turn()
+		return ch.Board.is_check(current_game.board, side)
+
 	lst2 = graph.recommend(popobject,before,mv,color,after)
 	lst2len = len(lst2)
 	print "\n\n\n\n\n\n\n"
@@ -61,14 +71,28 @@ while quit == False:
 	print "Here is the board:"
 	print after
 	if lst2len == 1:
-
+		if check_mate():
+			print check_mate_message
+			break
+		elif check():
+			print check_message
 		(x,y) = lst2[0]
 		print "You should make this move:", x
 		print "It should give you:"
 		print y
 	elif lst2len == 0:
+		if check_mate():
+			print check_mate_message
+			break
+		elif check():
+			print check_message
 		print "No Data: Make a random move"
 	else:
+		if check_mate():
+			print check_mate_message
+			break
+		elif check():
+			print check_message
 		print "You should make one of these moves:"
 		for item in lst2:
 			(x,y) = item
