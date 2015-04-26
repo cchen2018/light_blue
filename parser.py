@@ -2,6 +2,7 @@ import chess as ch
 import copy
 import glob
 import graph
+import weighting
 
 '''
 At the moment, this code prints out one game in this format:
@@ -83,10 +84,10 @@ def main():
         #print all_elements
         graph.initialize()
 
-        popobject = graph.popularity()
+        weightobj = weighting.popularity()
 
         for (a, b, c, d) in all_elements:
-            graph.recommend(popobject, a, b, c, d)
+            graph.recommend(weightobj, a, b, c, d)
 
         graph.save("CarlsenNew20")
 

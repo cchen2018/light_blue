@@ -1,6 +1,7 @@
 import parser
 import chess as ch
 import graph
+import weighting
 
 print "Welcome to Light Blue!"
 print "Type quit at any time to quit the application."
@@ -51,7 +52,7 @@ while quit == False:
 		color = 'b'
 	else: color = 'w'
 
-	popobject = graph.popularity()
+	popobject = weighting.popularity()
 
 	lst2 = graph.recommend(popobject,before,mv,color,after)
 	lst2len = len(lst2)

@@ -1,4 +1,5 @@
 import chess as ch
+import weighting
 
 # make the graph with the initial config, run before using other stuff
 def initialize():
@@ -62,7 +63,7 @@ def firstrecommend():
 recommends a move
 returns moves in a list of (move, resulting configuration) tuples
 '''
-def recommendold(before, move, color, after):
+def recommend(weight, before, move, color, after):
 	global graph
 	# finds initial config
 	if before in graph:
@@ -70,14 +71,18 @@ def recommendold(before, move, color, after):
 
 		# move exists
 		if (move, color) in moves:
-
+			
+			# grabs the output of the move dictionary 
 			edge = moves[(move, color)]
 
 			# verify resulting config
 			if edge[0] == after:
 
-				# adds to popularity
-				graph[before][(move, color)] = (edge[0], edge[1]+1)
+				# grabs current weight
+				current = edge[1]
+
+				# alters weight
+				graph[before][(move, color)] = (edge[0], weight.alter(current))
 
 				# finds destination node
 				if after in graph:
@@ -98,11 +103,10 @@ def recommendold(before, move, color, after):
 			if after in graph:
 
 				# new edge
-				graph[before][(move,color)] = (after, 1)
+				graph[before][(move,color)] = (after, weight.default)
 
 				# finds most popular move
 				return best(after, color)
-
 
 			# resulting configuration doesn't exist
 			else: 
@@ -111,7 +115,7 @@ def recommendold(before, move, color, after):
 				graph[after] = {}
 
 				# new edge
-				moves[(move, color)] = (after, 1)
+				moves[(move, color)] = (after, weight.default)
 
 				return []
 
@@ -188,81 +192,3 @@ load('test')
 assert firstrecommend() == [('mv4', 'D')]
 '''
 
-# getting ready to implement elo and win/loss
-
-class popularity(object):
-	def alter(self, current):
-		pop = current[0]
-		return (pop + 1,)
-	default = (1,)
-'''
-class elo(object):
-	def __init__(self, new):
-        self.new = new 
-	def alter(current):
-	default = 1
-
-class winloss(object):
-	def __init__(self, new):
-        self.new = new 
-	def alter(current):
-	default = 1
-'''
-
-def recommend(weight, before, move, color, after):
-	global graph
-	# finds initial config
-	if before in graph:
-		moves = graph[before]
-
-		# move exists
-		if (move, color) in moves:
-
-			edge = moves[(move, color)]
-
-			# verify resulting config
-			if edge[0] == after:
-
-				# grabs current weight
-				current = edge[1]
-
-				# alters weight
-				graph[before][(move, color)] = (edge[0], weight.alter(current))
-
-				# finds destination node
-				if after in graph:
-
-					#finds most popular move
-					return best(after, color)
-
-				# destination node missing
-				else: print 'Error: could not find expected destination node'
-
-			# resulting config incorrect
-			else: print 'Error: resulting config different in graph'
-
-		# move doesn't exist
-		else: 
-
-			# resulting configuration exists
-			if after in graph:
-
-				# new edge
-				graph[before][(move,color)] = (after, weight.default)
-
-				# finds most popular move
-				return best(after, color)
-
-			# resulting configuration doesn't exist
-			else: 
-
-				# new node
-				graph[after] = {}
-
-				# new edge
-				moves[(move, color)] = (after, weight.default)
-
-				return []
-
-	# didn't find initial config
-	else: print 'Error: could not find initial configuration'
