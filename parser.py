@@ -4,6 +4,7 @@ import glob
 import graph
 import weighting
 import sys
+import reg_exp
 
 '''
 At the moment, this code prints out one game in this format:
@@ -47,18 +48,23 @@ def main():
             if new_game.board.get_turn() == 0:
                     piece_color = "b"
                     #print piece_color
+                    reg_result = reg_exp.reg_exp(f, piece_color)
+                    elo = reg_result[0]
+                    wlt = reg_result[1]
+                    
             else:
                     piece_color = "w"
                     #print piece_color
                     #print move
+                    reg_result = reg_exp.reg_exp(f, piece_color)
+                    elo = reg_result[0]
+                    wlt = reg_result[1]
 
             if weight_type == "pop":
                 weight_obj = weighting.popularity()
             elif weight_type == "elo":
-                #TODO: elo = 
                 weight_obj = weighting.elo(elo)
             elif weight_type == "wl":
-                #TODO: wlt = 
                 weight_obj = weighting.winloss(wlt)
             else: 
                 raise "Usage: python parser.py weight_type"
