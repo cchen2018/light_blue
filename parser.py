@@ -83,10 +83,12 @@ def main():
         #print all_elements
         graph.initialize()
 
-        for (a, b, c, d) in all_elements:
-            graph.recommend(a, b, c, d)
+        popobject = graph.popularity()
 
-        graph.save("Kasparov20")
+        for (a, b, c, d) in all_elements:
+            graph.recommend(popobject, a, b, c, d)
+
+        graph.save("CarlsenNew20")
 
         #print graph.graph[str(starting_game.board)]
         #print graph.firstrecommend()

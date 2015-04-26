@@ -10,7 +10,7 @@ def initialize():
 	graph = {startpos:{}}
 
 # helper function
-def mostpopular(config, color):
+def best(config, color):
 	global graph
 	moves = graph[config]
 
@@ -30,7 +30,7 @@ def mostpopular(config, color):
 		# get list of popularities
 		lst = []
 		for key in moves:
-			lst.append(moves[key][1])
+			lst.append(moves[key][1][0])
 
 		# finds most popular
 		top = max(lst)
@@ -38,7 +38,7 @@ def mostpopular(config, color):
 		# finds all moves with top popularity
 		temp = []
 		for key in moves:
-			if moves[key][1] == top:
+			if moves[key][1][0] == top:
 				temp.append((key,moves[key][0]))
 
 		# formats list
@@ -56,13 +56,13 @@ returns moves in a list of (move, resulting configuration) tuples
 def firstrecommend():
 	global graph
 	global startpos
-	return mostpopular(startpos, 'b')
+	return best(startpos, 'b')
 
 '''
 recommends a move
 returns moves in a list of (move, resulting configuration) tuples
 '''
-def recommend(before, move, color, after):
+def recommendold(before, move, color, after):
 	global graph
 	# finds initial config
 	if before in graph:
@@ -83,7 +83,7 @@ def recommend(before, move, color, after):
 				if after in graph:
 
 					#finds most popular move
-					return mostpopular(after, color)
+					return best(after, color)
 
 				# destination node missing
 				else: print 'Error: could not find expected destination node'
@@ -101,7 +101,7 @@ def recommend(before, move, color, after):
 				graph[before][(move,color)] = (after, 1)
 
 				# finds most popular move
-				return mostpopular(after, color)
+				return best(after, color)
 
 
 			# resulting configuration doesn't exist
@@ -189,12 +189,12 @@ assert firstrecommend() == [('mv4', 'D')]
 '''
 
 # getting ready to implement elo and win/loss
-'''
+
 class popularity(object):
-	def alter(current):
-		current + 1
-	default = 1
-	
+	def alter(self, current):
+		return (current + 1,)
+	default = (1,)
+'''
 class elo(object):
 	def __init__(self, new):
         self.new = new 
@@ -208,7 +208,7 @@ class winloss(object):
 	default = 1
 '''
 
-def recommend2(weight, before, move, color, after):
+def recommend(weight, before, move, color, after):
 	global graph
 	# finds initial config
 	if before in graph:
@@ -223,16 +223,16 @@ def recommend2(weight, before, move, color, after):
 			if edge[0] == after:
 
 				# grabs current weight
-				current = edge[1]
+				current = edge[1][0]
 
 				# alters weight
-				graph[before][(move, color)] = (edge[0], weight.alter(edge[1]))
+				graph[before][(move, color)] = (edge[0], weight.alter(current))
 
 				# finds destination node
 				if after in graph:
 
 					#finds most popular move
-					return mostpopular(after, color)
+					return best(after, color)
 
 				# destination node missing
 				else: print 'Error: could not find expected destination node'
@@ -250,8 +250,7 @@ def recommend2(weight, before, move, color, after):
 				graph[before][(move,color)] = (after, weight.default)
 
 				# finds most popular move
-				return mostpopular(after, color)
-
+				return best(after, color)
 
 			# resulting configuration doesn't exist
 			else: 

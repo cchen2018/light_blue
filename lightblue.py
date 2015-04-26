@@ -6,7 +6,7 @@ print "Welcome to Light Blue!"
 print "Type quit at any time to quit the application."
 
 graph.initialize()
-graph.load("Carlsen20")
+graph.load("CarlsenNew20")
 
 current_game = ch.Game()
 current_game.setup()
@@ -36,16 +36,24 @@ else:
 		print y
 
 while quit == False:
+	# checks for quitting
 	mv = raw_input("What is your move? ")
 	if mv == "quit":
 		break
+
+	# makes move and grabs configs
 	before = str(current_game.board)
 	current_game.board.move(mv)
 	after = str(current_game.board)
+
+	# color correction
 	if color == 'w':
 		color = 'b'
 	else: color = 'w'
-	lst2 = graph.recommend(before,mv,color,after)
+
+	popobject = graph.popularity()
+
+	lst2 = graph.recommend(popobject,before,mv,color,after)
 	lst2len = len(lst2)
 	print "\n\n\n\n\n\n\n"
 	print "---------------------"
