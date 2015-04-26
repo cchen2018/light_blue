@@ -33,6 +33,9 @@ def main():
         piece_color = ""
         new_game.setup()
 
+        reg_result = reg_exp.reg_exp(f)
+
+
         for move in game.moves:
 
             old_board = new_game.board
@@ -48,17 +51,28 @@ def main():
             if new_game.board.get_turn() == 0:
                 piece_color = "b"
                 #print piece_color
-                reg_result = reg_exp.reg_exp(f, piece_color)
-                elo = reg_result[0]
-                wlt = reg_result[1]
+                #reg_result = reg_exp.reg_exp(f, piece_color)
+                elo = reg_result[1]
+                if reg_result[2] == "black":
+                    wlt = 'w'
+                elif reg_result[2] == "white":
+                    wlt = 'l'
+                else:
+                    wlt = 't'
                     
             else:
                 piece_color = "w"
                 #print piece_color
                 #print move
-                reg_result = reg_exp.reg_exp(f, piece_color)
+                #reg_result = reg_exp.reg_exp(f, piece_color)
                 elo = reg_result[0]
-                wlt = reg_result[1]
+                if reg_result[2] == "black":
+                    wlt = 'l'
+                elif reg_result[2] == "white":
+                    wlt = 'w'
+                else:
+                    wlt = 't'
+            
 
             if weight_type == "pop":
                 weight_obj = weighting.popularity()
