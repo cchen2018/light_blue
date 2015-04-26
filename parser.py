@@ -46,19 +46,19 @@ def main():
 
             # Getting piece colors - works
             if new_game.board.get_turn() == 0:
-                    piece_color = "b"
-                    #print piece_color
-                    reg_result = reg_exp.reg_exp(f, piece_color)
-                    elo = reg_result[0]
-                    wlt = reg_result[1]
+                piece_color = "b"
+                #print piece_color
+                reg_result = reg_exp.reg_exp(f, piece_color)
+                elo = reg_result[0]
+                wlt = reg_result[1]
                     
             else:
-                    piece_color = "w"
-                    #print piece_color
-                    #print move
-                    reg_result = reg_exp.reg_exp(f, piece_color)
-                    elo = reg_result[0]
-                    wlt = reg_result[1]
+                piece_color = "w"
+                #print piece_color
+                #print move
+                reg_result = reg_exp.reg_exp(f, piece_color)
+                elo = reg_result[0]
+                wlt = reg_result[1]
 
             if weight_type == "pop":
                 weight_obj = weighting.popularity()
@@ -80,13 +80,24 @@ def main():
         #print all_elements
         pgn_file.close()
 
-    #print all_elements
     graph.initialize()
 
     for (a, b, c, d, e) in all_elements:
         graph.recommend(a,b,c,d,e)
+        print a.new
 
-    graph.save("CarlsenNew20")
+    if weight_type == "pop":
+        graph.save("Carlsen20pop")
+    elif weight_type == "elo":
+        graph.save("Carlsen20elo")
+    elif weight_type == "wl":
+        graph.save("Carlsen20wl")
+    else: 
+        raise "Usage: python parser.py weight_type"
+    
+    for x in graph.graph:
+        for y in graph.graph[x]:
+            print graph.graph[x][y][1]
 
     #print graph.graph[str(starting_game.board)]
     #print graph.firstrecommend()
