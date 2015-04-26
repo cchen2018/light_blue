@@ -3,6 +3,7 @@ import copy
 import glob
 import graph
 import weighting
+import sys
 
 '''
 At the moment, this code prints out one game in this format:
@@ -14,9 +15,11 @@ New Board Configuration
 
         
 # main funtion for returning tuple format to graph
-def main(weight_type):
+def main():
     all_elements = []
     count = 0
+    weight_type = sys.argv[1]
+
     for f in glob.iglob('*.pgn'):
         count += 1
         game = ch.Game()
@@ -49,21 +52,33 @@ def main(weight_type):
                     #print piece_color
                     #print move
 
-            all_elements.append((str(old_board_copy), str(move), piece_color, str(new_board_copy)))
+            if weight_type == "pop":
+                weight_obj = weighting.popularity()
+            elif weight_type == "elo":
+                #TODO: elo = 
+                weight_obj = weighting.elo(elo)
+            elif weight_type == "wl":
+                #TODO: wlt = 
+                weight_obj = weighting.winloss(wlt)
+            else: 
+                raise "Usage: python parser.py weight_type"
+
+            all_elements.append(
+                (weight_obj, str(old_board_copy), str(move), piece_color, str(new_board_copy))
+            )
             #all_elements.append(elements)
 
         #print elements[0][3]
         print count
+
         #print all_elements
         pgn_file.close()
+
     #print all_elements
     graph.initialize()
 
-    
-    weight_obj = weighting.popularity()
-
-    for (a, b, c, d) in all_elements:
-        graph.recommend(weight_obj, a, b, c, d)
+    for (a, b, c, d, e) in all_elements:
+        graph.recommend(a,b,c,d,e)
 
     graph.save("CarlsenNew20")
 
