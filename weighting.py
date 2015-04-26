@@ -1,6 +1,7 @@
 # getting ready to implement elo and win/loss
 
 from __future__ import division
+import math
 
 class popularity(object):
 
@@ -55,22 +56,25 @@ class winloss(object):
 
 class lightblue(object):
 	def __init__(self, elo, wlt):
+		if elo == 0:
+			elo = 2000
 		self.elo = elo
 		self.wlt = wlt 
 
 		# tie
 		if self.wlt == "t":
-			self.default = (exp(self.elo/1000)/10,)
+			self.default = (math.exp(self.elo/1000)/10,)
 		# win
 		elif self.wlt == "w":
-			self.default = (exp(self.elo/1000),)
+			self.default = (math.exp(self.elo/1000),)
 		# loss
 		else:
-			self.default = (-1/(exp(self.elo/1000)),)
+			self.default = (-1/(math.exp(self.elo/1000)),)
 
 	def alter(self, current):
 		value = current[0]
-		return (value + self.default,)
+		change = self.default[0]
+		return (value + change,)
 		
 
 
