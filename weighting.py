@@ -10,7 +10,7 @@ class popularity(object):
 
 class elo(object):
 	def __init__(self, new):
-        self.new = new 
+		self.new = new 
 
     # overrides with higher elo
 	def alter(self, current):
@@ -22,7 +22,7 @@ class elo(object):
 
 class winloss(object):
 	def __init__(self, new):
-        self.new = new 
+		self.new = new 
 
     # alters win/loss ratio
 	def alter(self, current):
