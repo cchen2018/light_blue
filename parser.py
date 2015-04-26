@@ -98,7 +98,6 @@ def main():
 
     for (a, b, c, d, e) in all_elements:
         graph.recommend(a,b,c,d,e)
-        print a.new
 
     if weight_type == "pop":
         graph.save("Carlsen20pop")
