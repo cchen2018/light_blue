@@ -53,7 +53,9 @@ while quit == False:
 	else: color = 'w'
 
 	popobject = weighting.popularity()
-
+        
+        check_mate_message = "Checkmate! Congrats and thanks for using light_blue."
+        
 	def check_mate(): 
 		side = current_game.board.get_turn()
 		return ch.Board.is_mate(current_game.board, side)
