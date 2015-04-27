@@ -15,56 +15,60 @@ New Board Configuration
 '''
 
         
-# main funtion for returning tuple format to graph
+# parses and imports through individual-game PGNs 
 def main():
-    all_elements = []
+
+    # keeping track of file progress
     count = 0
+
+    # saves user choice of weighting algorithm
     weight_type = sys.argv[1]
 
+    # sets up graph
+    graph.initialize()
+
+    # for each pgn file
     for f in glob.iglob('*.pgn'):
-        count += 1
+
+        # initializes games
         game = ch.Game()
         new_game = ch.Game()
-        print f
+        new_game.setup()
+        piece_color = ""
+
+        # opens and imports file into game
         pgn_file = open(f, 'r')
         pgn = game.import_pgn(pgn_file)
 
-        #elements = []
-        piece_color = ""
-        new_game.setup()
-
+        # elo and win/loss parsing
         reg_result = reg_exp.reg_exp(f)
 
-
+        # for each move
         for move in game.moves:
 
+            # grabs configuration before the move
             old_board = new_game.board
-            #deepcopy old board to maintain config.
             old_board_copy = copy.deepcopy(old_board)
-            
+
+            # makes move
             new_game.move(move)
-            
+
+            # grabs configuration after the move
             new_board = new_game.board
             new_board_copy = copy.deepcopy(new_board)
 
-            # Getting piece colors - works
+            # elo and win/loss formatting
             if new_game.board.get_turn() == 0:
                 piece_color = "b"
-                #print piece_color
-                #reg_result = reg_exp.reg_exp(f, piece_color)
                 elo = reg_result[1]
                 if reg_result[2] == "black":
                     wlt = 'w'
                 elif reg_result[2] == "white":
                     wlt = 'l'
                 else:
-                    wlt = 't'
-                    
+                    wlt = 't'  
             else:
                 piece_color = "w"
-                #print piece_color
-                #print move
-                #reg_result = reg_exp.reg_exp(f, piece_color)
                 elo = reg_result[0]
                 if reg_result[2] == "black":
                     wlt = 'l'
@@ -73,7 +77,7 @@ def main():
                 else:
                     wlt = 't'
             
-
+            # selects weighting object
             if weight_type == "pop":
                 weight_obj = weighting.popularity()
             elif weight_type == "elo":
@@ -87,30 +91,29 @@ def main():
             else: 
                 raise "Usage: python parser.py weight_type"
 
-            all_elements.append(
-                (weight_obj, str(old_board_copy), str(move), piece_color, str(new_board_copy))
-            )
-            #all_elements.append(elements)
+            # imports into graph
+            graph.recommend(
+                weight_obj, 
+                str(old_board_copy), 
+                str(move), 
+                piece_color, 
+                str(new_board_copy))
 
-        #print elements[0][3]
-        print count
-
-        #print all_elements
+        # close file
         pgn_file.close()
 
-    graph.initialize()
+        # keeps track of progress
+        count += 1
+        print count
+        print f
 
-    for (a, b, c, d, e) in all_elements:
-        graph.recommend(a,b,c,d,e)
-
+    # saves graph to file
     graph.save("Carlsen20" + weight_type)
-    
+
+    # DEBUGGING: prints weights 
     for x in graph.graph:
         for y in graph.graph[x]:
             print graph.graph[x][y][1]
-
-    #print graph.graph[str(starting_game.board)]
-    #print graph.firstrecommend()
 
 
 if __name__ == '__main__':
