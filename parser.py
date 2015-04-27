@@ -82,6 +82,8 @@ def main():
                 weight_obj = weighting.winloss(wlt)
             elif weight_type == "lightblue":
                 weight_obj = weighting.lightblue(elo, wlt)
+            elif weight_type == "static":
+                weight_obj = weighting.static()
             else: 
                 raise "Usage: python parser.py weight_type"
 
@@ -101,16 +103,7 @@ def main():
     for (a, b, c, d, e) in all_elements:
         graph.recommend(a,b,c,d,e)
 
-    if weight_type == "pop":
-        graph.save("Carlsen20pop")
-    elif weight_type == "elo":
-        graph.save("Carlsen20elo")
-    elif weight_type == "wl":
-        graph.save("Carlsen20wl")
-    elif weight_type == "lightblue":
-        graph.save("Carlsen20lb")
-    else: 
-        raise "Usage: python parser.py weight_type"
+    graph.save("Carlsen20" + weight_type)
     
     for x in graph.graph:
         for y in graph.graph[x]:

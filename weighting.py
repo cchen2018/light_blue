@@ -1,6 +1,12 @@
 from __future__ import division
 import math
 
+# makes no change to weight
+class static(object):
+	def alter(self, current):
+		return current
+	default = (0,)
+
 # more popular moves are recommended
 class popularity(object):
 
