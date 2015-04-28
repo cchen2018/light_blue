@@ -17,9 +17,13 @@ print "\"static\""
 weight_type = raw_input("What kind of weighting would you like to use? ")
 
 # check and checkmate verification
-check_mate_message = "Congrats and thanks for using Light Blue."
+checkmate_message = "Congrats and thanks for using Light Blue."
 check_message = "You're in check!"
-def check_mate(): 
+stalemate_message = "The game is at a draw!"
+def stalemate():
+	side = current_game.board.get_turn()
+	return ch.Board.is_stalemate(current_game.board, side)
+def checkmate(): 
 	side = current_game.board.get_turn()
 	return ch.Board.is_mate(current_game.board, side)
 def check():
@@ -31,7 +35,7 @@ def checkmate_fun(color, weight_type, mvlst):
 		print "Checkmate! White Wins!"
 	else:
 		print "Checkmate! Black Wins!"
-	print check_mate_message
+	print checkmate_message
 
 	# backtracking
 	if weight_type == "wl":
@@ -133,7 +137,11 @@ while quit == False:
 		lst2 = graph.recommend(weight_obj,before,mv,color,after)
 	lst2len = len(lst2)
 	if lst2len == 1:
-		if check_mate():
+		if stalemate():
+			print stalemate_message
+			print stalemate_message
+			break 
+		if checkmate():
 			checkmate_fun(color, weight_type, mvlst)
 			break
 		elif check():
@@ -143,14 +151,22 @@ while quit == False:
 		print "It should give you:"
 		print y
 	elif lst2len == 0:
-		if check_mate():
+		if stalemate():
+			print stalemate_message
+			print stalemate_message
+			break 
+		if checkmate():
 			checkmate_fun(color, weight_type, mvlst)
 			break
 		elif check():
 			print check_message
 		print "No Data: Make a random move"
 	else:
-		if check_mate():
+		if stalemate():
+			print stalemate_message
+			print stalemate_message
+			break 
+		if checkmate():
 			checkmate_fun(color, weight_type, mvlst)
 			break
 		elif check():
