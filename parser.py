@@ -24,20 +24,6 @@ def main():
     # saves user choice of weighting algorithm
     weight_type = sys.argv[1]
 
-    # selects weighting object
-    if weight_type == "pop":
-        weight_obj = weighting.popularity()
-    elif weight_type == "elo":
-        weight_obj = weighting.elo(elo)
-    elif weight_type == "wl":
-        weight_obj = weighting.winloss(wlt)
-    elif weight_type == "lightblue":
-        weight_obj = weighting.lightblue(elo, wlt)
-    elif weight_type == "static":
-        weight_obj = weighting.static()
-    else: 
-        raise "Usage: python parser.py weight_type"
-
     # sets up graph
     graph.initialize()
 
@@ -90,6 +76,20 @@ def main():
                     wlt = 'w'
                 else:
                     wlt = 't'
+
+            # selects weighting object
+            if weight_type == "pop":
+                weight_obj = weighting.popularity()
+            elif weight_type == "elo":
+                weight_obj = weighting.elo(elo)
+            elif weight_type == "wl":
+                weight_obj = weighting.winloss(wlt)
+            elif weight_type == "lightblue":
+                weight_obj = weighting.lightblue(elo, wlt)
+            elif weight_type == "static":
+                weight_obj = weighting.static()
+            else: 
+                raise "Usage: python parser.py weight_type"
 
             # imports into graph
             graph.recommend(
