@@ -47,7 +47,7 @@ class winloss(object):
 			self.default = (0,0,1)
 
 	def alter(self, current):
-		(weight,win,loss) = current
+		weight,win,loss = current
 
 		#tie
 		if self.new == "t":
