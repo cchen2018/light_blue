@@ -134,9 +134,9 @@ while quit == False:
 	# elo recommendation
 	if weight_type == "elo":
 		if color == 'w':
-			lst2 = graph.recommend(weight_objb,before,mv,color,after)
-		else: 
 			lst2 = graph.recommend(weight_objw,before,mv,color,after)
+		else: 
+			lst2 = graph.recommend(weight_objb,before,mv,color,after)
 
 	# generate recommendation
 	lst2 = graph.recommend(weight_obj,before,mv,color,after)
