@@ -47,21 +47,31 @@ class winloss(object):
 			self.default = (0,0,1)
 
 	def alter(self, current):
-		(weight, win, loss) = current
-		#win = current[1]
-		#loss = current[2]
-
-		#tie
-		if self.new == "t":
-			return current
-		# win
-		elif self.new == "w":
-			win += 1
-			return ((win/loss),win,loss)
-		# loss
+		# when backtracking across new moves
+		if current == (0,):
+			# tie
+			if self.new == "t":
+				return (1,1,1)
+			# win
+			elif self.new == "w":
+				return (2,2,1)
+			# loss
+			else:
+				return (0,0,1)
 		else:
-			loss += 1
-			return ((win/loss),win,loss)
+			(weight, win, loss) = current
+
+			#tie
+			if self.new == "t":
+				return current
+			# win
+			elif self.new == "w":
+				win += 1
+				return ((win/loss),win,loss)
+			# loss
+			else:
+				loss += 1
+				return ((win/loss),win,loss)
 
 # proprietary lightblue algorithm for weighting
 class lightblue(object):
