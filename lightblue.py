@@ -14,7 +14,7 @@ print "\"pop\""
 print "\"elo\""
 print "\"wl\""
 print "\"static\""
-weight_type = raw_input("What kind of weighting would you like to use?")
+weight_type = raw_input("What kind of weighting would you like to use? ")
 
 # check and checkmate verification
 check_mate_message = "Congrats and thanks for using Light Blue."
@@ -28,11 +28,9 @@ def check():
 def checkmate_fun(color, weight_type, mvlst):
 	# corrects color again
 	if color == 'w':
-		winner == 'b'
-		print "Checkmate! Black Wins!"
-	else:
-		winner == 'w'
 		print "Checkmate! White Wins!"
+	else:
+		print "Checkmate! Black Wins!"
 	print check_mate_message
 
 	# backtracking
@@ -43,7 +41,7 @@ def checkmate_fun(color, weight_type, mvlst):
 		loser_obj = weighting.winloss('l')
 
 		for (a,b,c,d,e) in mvlst:
-			if d == winner:
+			if d == color:
 				graph.recommend(winner_obj,b,c,d,e)
 			else:
 				graph.recommend(loser_obj,b,c,d,e)
@@ -56,13 +54,13 @@ elif weight_type == "elo":
     weight_objb = weighting.elo(blackelo)
 elif weight_type == "wl":
     weight_obj = weighting.static()
-    mvlst = []
 elif weight_type == "lightblue":
     weight_obj = weighting.lightblue(elo, wlt)
 elif weight_type == "static":
     weight_obj = weighting.static()
 else: 
     raise "invalid weight type"
+mvlst = []
 
 # loads graph
 graph.initialize()
@@ -115,12 +113,6 @@ while quit == False:
 	current_game.board.move(mv)
 	after = str(current_game.board)
 
-	# color correction
-	if color == 'w':
-		color = 'b'
-	else: 
-		color = 'w'
-
 	# prints current board
 	print "\n\n\n\n\n\n\n"
 	print "---------------------"
@@ -131,15 +123,14 @@ while quit == False:
 	if weight_type == "wl":
 		mvlst.append((weight_obj,before,mv,color,after))
 
-	# elo recommendation
+	# generate recommendation
 	if weight_type == "elo":
 		if color == 'w':
 			lst2 = graph.recommend(weight_objw,before,mv,color,after)
 		else: 
 			lst2 = graph.recommend(weight_objb,before,mv,color,after)
-
-	# generate recommendation
-	lst2 = graph.recommend(weight_obj,before,mv,color,after)
+	else:
+		lst2 = graph.recommend(weight_obj,before,mv,color,after)
 	lst2len = len(lst2)
 	if lst2len == 1:
 		if check_mate():
@@ -170,3 +161,11 @@ while quit == False:
 			print "One possible move is:", x
 			print "It should give you:"
 			print y
+
+	# color correction
+	if color == 'w':
+		color = 'b'
+	else: 
+		color = 'w'
+
+graph.save("Carlsen20" + weight_type)
