@@ -26,7 +26,11 @@ print "  (f) Illegal moves will be cause the program to terminate with exception
 print "      code from the chess API that light_blue uses."
 print "  (g) Please see http://en.wikipedia.org/wiki/Rules_of_chess for the complete set of chess rules."
 whiteelo = raw_input("What is the White player's elo rating? (type 0 if unsure) ")
+if not whiteelo.isdigit():
+	raise "Elo must be a positive integer."
 blackelo = raw_input("What is the Black player's elo rating? (type 0 if unsure) ")
+if not blackelo.isdigit():
+	raise "Elo must be a positive integer."
 print "Available weighting algorithms include:"
 print "\"lightblue\""
 print "\"pop\""
@@ -36,12 +40,12 @@ print "\"static\""
 weight_type = raw_input("What kind of weighting would you like to use? ")
 
 # check and checkmate/stalemate verification
-checkmate_message = "Congrats and thanks for using Light Blue."
 check_message = "You're in check!"
 stalemate_message = "The game is at a draw!"
 def stalemate():
-	side = current_game.board.get_turn()
-	return ch.Board.is_stalemate(current_game.board, side)
+	print "Stalemate broken"
+	#side = current_game.board.get_turn()
+	#return ch.Board.is_stalemate(current_game.board, side)
 def checkmate(): 
 	side = current_game.board.get_turn()
 	return ch.Board.is_mate(current_game.board, side)
@@ -52,16 +56,31 @@ def checkmate_fun(color, weight_type, mvlst):
 	# corrects color again
 	if color == 'w':
 		print "Checkmate! White Wins!"
+		winnerelo = whiteelo
+		loserelo = blackelo
 	else:
 		print "Checkmate! Black Wins!"
-	print checkmate_message
+		winnerelo = blackelo
+		loserelo = whiteelo
+	print "Congrats and thanks for using Light Blue."
+	print "Made by Phillip Huang, Collin Styring, Javier Cuan-Martinez and Chris Chen for CS51."
 
 	# backtracking
 	if weight_type == "wl":
-
 		# generates new weight_objs
 		winner_obj = weighting.winloss('w')
 		loser_obj = weighting.winloss('l')
+
+		for (a,b,c,d,e) in mvlst:
+			if d == color:
+				graph.recommend(winner_obj,b,c,d,e)
+			else:
+				graph.recommend(loser_obj,b,c,d,e)
+
+	elif weight_type == "lightblue":
+		# generates new weight_objs
+		winner_obj = weighting.lightblue(winnerelo, 'w')
+		loser_obj = weighting.lightblue(loserelo, 'l')
 
 		for (a,b,c,d,e) in mvlst:
 			if d == color:
@@ -78,7 +97,7 @@ elif weight_type == "elo":
 elif weight_type == "wl":
     weight_obj = weighting.static()
 elif weight_type == "lightblue":
-    weight_obj = weighting.lightblue(elo, wlt)
+    weight_obj = weighting.static()
 elif weight_type == "static":
     weight_obj = weighting.static()
 else: 
@@ -143,7 +162,7 @@ while quit == False:
 	print after
 
 	# win loss backtrack storage
-	if weight_type == "wl":
+	if weight_type == "wl" or weight_type == "lightblue":
 		mvlst.append((weight_obj,before,mv,color,after))
 
 	# generate recommendation

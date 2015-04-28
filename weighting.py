@@ -18,17 +18,17 @@ class popularity(object):
 
 # moves made by player with highest elo recommended
 class elo(object):
-	def __init__(self, new):
-		if new == 0:
-			new = 2000
-		self.new = new 
-		self.default = (new,)
+	def __init__(self, elo):
+		if int(elo) == 0:
+			elo = 2000
+		self.elo = int(elo)
+		self.default = (self.elo,)
 
     # overrides with higher elo
 	def alter(self, current):
 		rating = current[0]
-		if self.new > rating:
-			return (self.new,)
+		if self.elo > rating:
+			return (self.elo,)
 		else: return current
 
 # moves with highest win/loss ratio recommended
@@ -66,20 +66,20 @@ class winloss(object):
 # proprietary lightblue algorithm for weighting
 class lightblue(object):
 	def __init__(self, elo, wlt):
-		if elo == 0:
+		if int(elo) == 0:
 			elo = 2000
 		self.elo = elo
 		self.wlt = wlt 
 
 		# tie
 		if self.wlt == "t":
-			self.default = (math.exp(self.elo/1000)/10,)
+			self.default = (math.exp(int(self.elo)/1000)/10,)
 		# win
 		elif self.wlt == "w":
-			self.default = (math.exp(self.elo/1000),)
+			self.default = (math.exp(int(self.elo)/1000),)
 		# loss
 		else:
-			self.default = (-1/(math.exp(self.elo/1000)),)
+			self.default = (-1/(math.exp(int(self.elo)/1000)),)
 
 	def alter(self, current):
 		value = current[0]
