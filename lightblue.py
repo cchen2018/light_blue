@@ -57,7 +57,6 @@ while weight_type != "lightblue" \
 
 # check and checkmate/stalemate verification
 check_message = "You're in check!"
-stalemate_message = "The game is at a draw!"
 def stalemate():
 	#print "Stalemate broken"
 	side = current_game.board.get_turn()
@@ -97,6 +96,29 @@ def checkmate_fun(color, weight_type, mvlst):
 		# generates new weight_objs
 		winner_obj = weighting.lightblue(winnerelo, 'w')
 		loser_obj = weighting.lightblue(loserelo, 'l')
+
+		for (a,b,c,d,e) in mvlst:
+			if d == color:
+				graph.recommend(winner_obj,b,c,d,e)
+			else:
+				graph.recommend(loser_obj,b,c,d,e)
+def stalemate_fun(weight_type, mvlst):
+	print "The game is at a draw!"
+	print "Congrats and thanks for using Light Blue."
+	print "Made by Phillip Huang, Collin Styring, Javier Cuan-Martinez and Chris Chen for CS51."
+
+	# backtracking
+	if weight_type == "wl":
+		# generates new weight_objs
+		weight_obj = weighting.winloss('t')
+		# backtracks
+		for (a,b,c,d,e) in mvlst:
+				graph.recommend(weight_obj,b,c,d,e)
+
+	elif weight_type == "lightblue":
+		# generates new weight_objs
+		winner_obj = weighting.lightblue(winnerelo, 't')
+		loser_obj = weighting.lightblue(loserelo, 't')
 
 		for (a,b,c,d,e) in mvlst:
 			if d == color:
@@ -192,13 +214,12 @@ while quit == False:
 	lst2len = len(lst2)
 	if lst2len == 1:
 		if stalemate():
-			print stalemate_message
-			print stalemate_message
+			stalemate_fun(weight_type, mvlst)
 			break 
 		if checkmate():
 			checkmate_fun(color, weight_type, mvlst)
 			break
-		elif check():
+		if check():
 			print check_message
 		(x,y) = lst2[0]
 		print "You should make this move:", x
@@ -206,24 +227,22 @@ while quit == False:
 		print y
 	elif lst2len == 0:
 		if stalemate():
-			print stalemate_message
-			print stalemate_message
+			stalemate_fun(weight_type, mvlst)
 			break 
 		if checkmate():
 			checkmate_fun(color, weight_type, mvlst)
 			break
-		elif check():
+		if check():
 			print check_message
 		print "No Data: Make a random move"
 	else:
 		if stalemate():
-			print stalemate_message
-			print stalemate_message
+			stalemate_fun(weight_type, mvlst)
 			break 
 		if checkmate():
 			checkmate_fun(color, weight_type, mvlst)
 			break
-		elif check():
+		if check():
 			print check_message
 		print "You should make one of these moves:"
 		for item in lst2:
