@@ -2,6 +2,7 @@ import parser
 import chess as ch
 import graph
 import weighting
+import sys
 
 # intro 
 print "Welcome to Light Blue!"
@@ -26,11 +27,17 @@ print "  (f) Illegal moves will be cause the program to terminate with exception
 print "      code from the chess API that light_blue uses."
 print "  (g) Please see http://en.wikipedia.org/wiki/Rules_of_chess for the complete set of chess rules."
 whiteelo = raw_input("What is the White player's elo rating? (type 0 if unsure) ")
-if not whiteelo.isdigit():
-	raise "Elo must be a positive integer."
+while not whiteelo.isdigit():
+        if whiteelo == "quit":
+                sys.exit()
+	print "Elo must be a positive integer."
+        whiteelo = raw_input("What is the White player's elo rating? (type 0 if unsure) ")
 blackelo = raw_input("What is the Black player's elo rating? (type 0 if unsure) ")
-if not blackelo.isdigit():
-	raise "Elo must be a positive integer."
+while not blackelo.isdigit():
+        if blackelo == "quit":
+                sys.exit()
+	print "Elo must be a positive integer."
+        blackelo = raw_input("What is the Black player's elo rating? (type 0 if unsure) ")
 print "Available weighting algorithms include:"
 print "\"lightblue\""
 print "\"pop\""
@@ -38,6 +45,15 @@ print "\"elo\""
 print "\"wl\""
 print "\"static\""
 weight_type = raw_input("What kind of weighting would you like to use? ")
+while weight_type != "lightblue" \
+      and weight_type != "pop" \
+      and weight_type != "elo" \
+      and weight_type != "wl" \
+      and weight_type != "static":
+        if weight_type == "quit":
+                sys.exit()
+        print "Must choose valid weighting algorithm."
+        weight_type = raw_input("What kind of weighting would you like to use? ")
 
 # check and checkmate/stalemate verification
 check_message = "You're in check!"
