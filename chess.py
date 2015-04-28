@@ -1291,7 +1291,7 @@ class Board( object ):
         if side is None:
             side = self.get_turn()
 
-        return not is_check(side) and not self.any_legal_moves(side)
+        return not self.is_check(side) and not self.any_legal_moves(side)
 
 
     def check_result(self, side=None):

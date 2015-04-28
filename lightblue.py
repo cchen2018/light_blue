@@ -59,9 +59,9 @@ while weight_type != "lightblue" \
 check_message = "You're in check!"
 stalemate_message = "The game is at a draw!"
 def stalemate():
-	print "Stalemate broken"
-	#side = current_game.board.get_turn()
-	#return ch.Board.is_stalemate(current_game.board, side)
+	#print "Stalemate broken"
+	side = current_game.board.get_turn()
+	return ch.Board.is_stalemate(current_game.board, side)
 def checkmate(): 
 	side = current_game.board.get_turn()
 	return ch.Board.is_mate(current_game.board, side)
