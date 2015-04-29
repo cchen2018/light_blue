@@ -1,3 +1,6 @@
+''' parses through large amounts of single-game PGNs
+    and imports data into graph '''
+
 import chess as ch
 import copy
 import glob

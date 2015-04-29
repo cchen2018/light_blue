@@ -1,3 +1,5 @@
+''' prints first moves, weights, and configurations '''
+
 import graph
 import chess as ch
 import sys

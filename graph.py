@@ -1,3 +1,5 @@
+''' builds and reads graph of board configurations '''
+
 import chess as ch
 import weighting
 
