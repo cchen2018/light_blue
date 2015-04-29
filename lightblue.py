@@ -42,6 +42,8 @@ for the complete set of chess rules."
 
 # grab white elo and check if positive int
 whiteelo = raw_input("What is the White player's elo rating? (type 0 if unsure) ")
+if whiteelo == "42":
+        print "Functions are values."
 while not whiteelo.isdigit():
         if whiteelo == "quit":
                 sys.exit()
@@ -50,6 +52,8 @@ while not whiteelo.isdigit():
 
 # grab black elo and check if positive int
 blackelo = raw_input("What is the Black player's elo rating? (type 0 if unsure) ")
+if blackelo == "42":
+        print "Functions are values."
 while not blackelo.isdigit():
         if blackelo == "quit":
                 sys.exit()
