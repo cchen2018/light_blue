@@ -165,7 +165,7 @@ mvlst = []
 
 # loads graph
 graph.initialize()
-graph.load("Carlsen20" + weight_type)
+graph.load("Carlsen100" + weight_type)
 
 # initializes board
 current_game = ch.Game()
@@ -278,4 +278,4 @@ while quit == False:
 	else: 
 		color = 'w'
 
-graph.save("Carlsen20" + weight_type)
+graph.save("Carlsen100" + weight_type)
