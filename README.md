@@ -17,7 +17,7 @@ Explanation of Files:
 
 	-chess.py
 		This is a file downloaded from the internet which includes a 
-		lot of infrastructure for chess game play. This file was 
+		lot of infrastructure for chess gameplay. This file was 
 		created by William McGugan and was found at this URL: 
 		http://www.willmcgugan.com/blog/tech/2006/6/18/chesspy/. 
 		Many corrections had to be made to this file for it to be 
@@ -26,7 +26,7 @@ Explanation of Files:
 	-graph.py
 		This is the file which handles building and traversing large 
 		graphs of chess data. This is where most of the functionality 
-		exists for reccomending and storing moves.
+		exists for recommending and storing moves.
 
 	-parser.py
 		This is the file responsible for parsing PGN files and feeding 
@@ -126,12 +126,12 @@ Instructions for Preparing and Running Light Blue:
 	     1) Copy graph data including Magnus Carlsen's 100 games from the 
 	     	"Final Submission/data/100 games/" directory into the working 
 		directory with the code (Final Submission/code/). *NOTE* IF THE
-		CARLSEN100... GRAPHS ARE NOT IN THE CODE DIRECTORY THE PROGRAM 
+		CARLSEN100... GRAPHS ARE NOT IN THE CODE DIRECTORY, THE PROGRAM 
 		WILL NOT HAVE ANY DATA TO USE FOR RECOMMENDING MOVES, AND 
 		THEREFORE WILL NOT RUN. *ASIDE* THE CURRENT CODE IS NOT SET UP 
 		TO RUN THE CARLSEN20... FILES, THESE FILES WERE USED DURING 
 		PRELIMINARY TESTING AND WERE INCLUDED TO SHOW THOROUGH THOUGHT 
-		AND ANALYSIS, THEY ARE NOT TO BY RUN WITH LIGHT BLUE.
+		AND ANALYSIS. THEY ARE NOT TO BE RUN WITH LIGHT BLUE.
 	     2) After all 5 Carlsen100... files are moved into the /code/ 
 	     	directory, type "python lightblue.py" into the terminal when 
 		currently stationed in the /code/ directory and begin using 
