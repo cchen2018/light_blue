@@ -105,6 +105,9 @@ def main():
         # close file
         pgn_file.close()
 
+        # clears memory
+        reload(ch)
+
         # keeps track of progress
         count += 1
         print count
