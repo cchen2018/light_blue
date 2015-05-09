@@ -116,7 +116,7 @@ def main():
 
     ''' change here '''
     # saves graph to file
-    graph.save("Carlsen100" + weight_type)
+    graph.save("Carlsen" + weight_type)
 
 
     ''' change here '''

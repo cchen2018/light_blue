@@ -76,6 +76,9 @@ while weight_type != "lightblue" \
         print "Must choose valid weighting algorithm."
         weight_type = raw_input("What kind of weighting would you like to use? ")
 
+# prompts user to wait
+print "Loading... please wait"
+
 # check and checkmate/stalemate verification
 check_message = "You're in check!"
 def stalemate():
@@ -165,7 +168,7 @@ mvlst = []
 
 # loads graph
 graph.initialize()
-graph.load("Carlsen100" + weight_type)
+graph.load("Carlsen" + weight_type)
 
 # initializes board
 current_game = ch.Game()
@@ -207,6 +210,7 @@ while quit == False:
 	# checks for quit and help
 	mv = raw_input("What is your move? ")
 	if mv == "quit":
+		print "Unloading files... please wait"
 		break
 	
 	# makes move and grabs configs
@@ -278,4 +282,4 @@ while quit == False:
 	else: 
 		color = 'w'
 
-graph.save("Carlsen100" + weight_type)
+graph.save("Carlsen" + weight_type)
